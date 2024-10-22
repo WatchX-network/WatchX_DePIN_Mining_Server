@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/WatchX-network/WatchX_DePIN_Mining_Server.git",
-  "author": "hongqi1422 <guoqi1422@163.com>",
+  "author": "watchx",
   "license": "MIT",
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
