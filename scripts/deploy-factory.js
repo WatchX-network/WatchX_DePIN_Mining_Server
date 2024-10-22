@@ -26,17 +26,16 @@ async function main() {
   const factory = await ethers.deployContract('UniversalFactory', [proxyImplementation.target]);
   await factory.waitForDeployment();
   console.log(`UniversalFactory deployed to ${factory.target}`);
-  // 获取 UniversalFactory 合约实例
-  const factoryContract = await ethers.getContractAt("UniversalFactory", "0x22E55A58BC88E6f2712dD4fbF5ef7EC153845bcC");
-  const createTx =  await factoryContract.create('1',process.env.DEPLOYER_ACCOUNT,'HQdev3','hqdevnft','hqdevnft',100,{value: ethers.parseEther("1")} )
+  //UniversalFactory
+  const factoryContract = await ethers.getContractAt("UniversalFactory", process.env.UNIVERSAL_FACTORY);
+  const createTx =  await factoryContract.create('1',process.env.DEPLOYER_ACCOUNT,'YOUR_PROJECT','YOUR_NFT','YOUR_NFT',100,{value: ethers.parseEther("1")} )
   const receipt = await createTx.wait()
   console.info('create receipt:',receipt)
-// 检查 events 是否存在
+// events
 if (receipt.events && receipt.events.length > 0) {
-  // 从事件日志中解析新创建的代理合约地址
   const event = receipt.events.find(event => event.event === 'CreatedProxy');
   if (event) {
-    const createdProxyAddress = event.args[0];  // 获取 CreatedProxy 事件中的代理合约地址
+    const createdProxyAddress = event.args[0];
     console.log(`Proxy contract created at address: ${createdProxyAddress}`);
   } else {
     console.log("CreatedProxy event not found");

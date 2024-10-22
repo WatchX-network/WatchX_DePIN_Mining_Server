@@ -29,7 +29,7 @@ async function main() {
   const proxyInitialize = await proxyImplementation.initialize(
     0,
     process.env.VERIFIER_ACCOUNT,
-    "WatchX_IoTex_Mining","WatchX Device Card","WXDT",
+    "YOUR_PROJECT","YOUR_NFT","YOURNFT",
     0,
     {value: ethers.parseEther("1")})
   const receipt = await proxyInitialize.wait()

@@ -14,20 +14,20 @@ async function main() {
   console.info("deployer:",deployer)
 
   const projectRegistry = await ethers.getContractAt('ProjectRegistry', process.env.PROJECT_REGISTRY);
-  let tx = await projectRegistry['register(string,uint8)']('hongqidev6', 0);
+  let tx = await projectRegistry['register(string,uint8)']('testProject', 0);
   const receipt = await tx.wait();
   console.info('receipt:',receipt)
   let projectId;
   for (let i = 0; i < receipt.logs.length; i++) {
     const log = receipt.logs[i];
-    if (log.topics[0] == '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef') {
+    if (log.topics[0] == process.env.PROJECT_REGISTRY_TOPIC_0) {
       projectId = BigInt(log.topics[3]);
     }
   }
 
   const deviceNFT = await ethers.deployContract('DeviceNFT');
   await deviceNFT.waitForDeployment();
-  const initializetx = await deviceNFT.initialize('hongqiNFT','HQNFT')
+  const initializetx = await deviceNFT.initialize('testNFT','TNFT')
   await initializetx.wait()
   const owner = await deviceNFT.owner();
   console.info("projectId;",projectId)
@@ -40,7 +40,7 @@ async function main() {
   ]);
   await proxyImplementation.waitForDeployment();
   console.log(`VerifyingProxy deployed to ${proxyImplementation.target}`);
-  const proxyInitialize = await proxyImplementation.initialize(2,process.env.DEPLOYER_ACCOUNT,"HQdev6","hqnft","hqnft",100)
+  const proxyInitialize = await proxyImplementation.initialize(2,process.env.DEPLOYER_ACCOUNT,"testProject","testNFT","TNFT",100)
   // const proxyInitialize = await proxyImplementation.initialize(projectId,process.env.DEPLOYER_ACCOUNT,deviceNFT.target,100)
   const proxyInitializeReceipt = await proxyInitialize.wait()
   console.info("proxyInitializeReceipt:",proxyInitializeReceipt)
