@@ -22,7 +22,6 @@ module.exports = {
     ],
   },
   networks: {
-    // 网络
     sepolia: {
       url: `https://eth-sepolia.g.alchemy.com/v2/rhaJFeiHbbllCyveEjstHVwo9ZXa_Upt`,
       accounts: [process.env.DEPLOYER_PRIVATE_KEY],
